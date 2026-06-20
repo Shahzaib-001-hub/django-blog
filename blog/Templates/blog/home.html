@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Blog</title>
+</head>
+<body>
+<a href="/post/new/">+ New Post</a>
+<hr> 
+<nav>
+    {% if request.user.is_authenticated %}
+        Welcome, {{ request.user.username }}! |
+        <a href="/post/new/">+ New Post</a> |
+        <a href="/logout/">Logout</a>
+    {% else %}
+        <a href="/login/">Login</a> |
+        <a href="/register/">Register</a>
+    {% endif %}
+</nav>
+<hr>
+
+    <h1>My Blog 📝</h1>
+    <hr>
+
+    {% for post in posts %}
+    <div>
+        <h2>{{ post.title }}</h2>
+        <p><strong>Author:</strong> {{ post.author }}</p>
+        <p><strong>Date:</strong> {{ post.created_at|date:"d M Y" }}</p>
+        <p>{{ post.content }}</p>
+        <a href="/post/{{ post.pk }}/">Read More →</a>
+        <hr>
+    </div>
+{% empty %}
+    <p>No posts yet.</p>
+{% endfor %}
+
+
+
+</body>
+</html>
